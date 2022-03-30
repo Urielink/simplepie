@@ -22,11 +22,14 @@ if (isset($_GET['js']))
 // Make sure that page is getting passed a URL
 if (isset($_GET['feed']) && $_GET['feed'] !== '')
 {
-	// Strip slashes if magic quotes is enabled (which automatically escapes certain characters)
-	if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
-	{
-		$_GET['feed'] = stripslashes($_GET['feed']);
-	}
+	// // Strip slashes if magic quotes is enabled (which automatically escapes certain characters)
+	// if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
+	// {
+	// 	$_GET['feed'] = stripslashes($_GET['feed']);
+	// }
+	
+	// // Fix: @ref https://findnerd.com/list/view/get-magic-quotes-gpc-function-is-deprecated-please-help/4108/.
+	$_GET['feed'] = htmlentities(stripslashes($_GET['feed']));
 
 	// Use the URL that was passed to the page in SimplePie
 	$feed->set_feed_url($_GET['feed']);
